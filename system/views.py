@@ -19,7 +19,15 @@ class UserViewOnePatient(TemplateView):
         caseID = self.kwargs['caseID']
 
         context = super().get_context_data(**kwargs)
-        patient = Patient.objects.get(id = caseID)
+        patient = Patient.objects.get(id=caseID)
         context['patient'] = patient
         context['visit_list'] = patient.visit_set.all()
+        return context
+
+class UserViewAllVisits(TemplateView):
+    template_name = 'visits.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['visit_list'] = Visit.objects.all()
         return context

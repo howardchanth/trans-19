@@ -20,6 +20,9 @@ urlpatterns = [
     path('patients/',
         views.UserViewAllPatients.as_view(),
         name='all-patients'),
+    path('visits/',
+        views.UserViewAllVisits.as_view(),
+        name='all-visits'),
     path('view/<int:caseID>',
         views.UserViewOnePatient.as_view(),
         name='selected-patient'
