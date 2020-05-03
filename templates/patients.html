@@ -6,15 +6,27 @@
         <style type="text/css">
             table, th, td {
                 border: 1px solid black;
+                margin-left:auto;
+                margin-right:auto;
+                height: 30px;
+                text-align:center;
             }
         </style>
     </head>
     <body>
         <div>
-            <a href="/system/home/">
+            <a href="">
                 {% load static %}
                 <img src="{% static '/logo.jpg' %}">
             </a>
+            <a href="/system/patients/">Patients</a> |
+            <a href="/system/locations/">Locations</a> |
+            <a href="/system/visits/">Visits</a>
+            <div style="text-align:right;">
+            <a href="/system/patients/">Search</a> |
+            <a href="/system/patients/">Create</a>
+            </div>
+            <h2 style="text-align:center;"> All Patients</h2>
         </div>
         <div>
             <table>
@@ -24,7 +36,7 @@
                     <th>Date of Birth</th>
                     <th>Date Case Confirmed</th>
                     <th>Case Number</th>
-                    <th>Action</th>
+                    <th>Actions</th>
                 </tr>
                 {% for patient in patient_list %}
                 <tr>
@@ -33,7 +45,11 @@
                     <td>{{patient.DoB}}</td>
                     <td>{{patient.DCC}}</td>
                     <td>{{patient.caseID}}</td>
-                    <td><a href="/system/view/{{patient.caseID}}">View</a></td>
+                    <td>
+                        <a href="/system/view/{{patient.caseID}}">View</a> |
+                        <a href="/system/patients/">Edit</a> |
+                        <a href="/system/patients/">Delete</a>
+                    </td>
                 </tr>            
                 {% endfor %}
             </table>
