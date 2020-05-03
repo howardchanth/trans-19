@@ -23,6 +23,9 @@ urlpatterns = [
     path('visits/',
         views.UserViewAllVisits.as_view(),
         name='all-visits'),
+    path('locations/',
+         views.UserViewAllLocations.as_view(),
+         name='all-locations'),
     path('view/<int:caseID>',
         views.UserViewOnePatient.as_view(),
         name='selected-patient'

@@ -25,26 +25,22 @@
             <a href="/system/patients/">Search</a> |
             <a href="/system/patients/">Create</a>
             </div>
-            <h2 style="text-align:center;"> Visits List</h2>
+            <h2 style="text-align:center;"> Locations Details</h2>
         </div>
         <div style="text-align:center;">
             <table>
                 <tr>
-                    <th>Patient Name</th>
-                    <th>Location Visited</th>
-                    <th>Date From</th>
-                    <th>Date To</th>
-                    <th>Detail</th>
-                    <th>Category</th>
+                    <th>Location</th>
+                    <th>Address</th>
+                    <th>District</th>
+                    <th>Coordinates</th>
                 </tr>
-                {% for visit in visit_list %}
+                {% for location in location_list %}
                 <tr>
-                    <td>{{visit.patient.name}}</td>
-                    <td>{{visit.location.name}}</td>
-                    <td>{{visit.D_from}}</td>
-                    <td>{{visit.D_to}}</td>
-                    <td>{{visit.detail}}</td>
-                    <td>{{visit.category}}</td>
+                    <td>{{location.name}}</td>
+                    <td>{{location.address}}</td>
+                    <td>{{location.district}}</td>
+                    <td>{{location.x}}, {{location.y}}</td>
                     <td>
                         <a href="/system/patients/">View</a> |
                         <a href="/system/patients/">Edit</a> |
