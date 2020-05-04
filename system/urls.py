@@ -26,8 +26,21 @@ urlpatterns = [
     path('locations/',
          views.UserViewAllLocations.as_view(),
          name='all-locations'),
+    # path('create_patient/',
+    #      views.UserCreateOnePatient.as_view(),
+    #      name='create-patient'),
+    path('create_patient/',
+         views.UserCreateOnePatient.as_view(),
+         name='create-patient'),
+    path('create_location/',
+         views.UserCreateOneLocation.as_view(),
+         name='create-location'),
+    path('create_visit/',
+         views.UserCreateOneVisit.as_view(),
+         name='create-visit'),
     path('view/<int:caseID>',
         views.UserViewOnePatient.as_view(),
         name='selected-patient'
+
     ),
 ]
