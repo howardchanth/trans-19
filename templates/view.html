@@ -1,67 +1,72 @@
 <!doctype html>
-<html>
-    <head>
-        <meta Charset=“UTF-8”>
-        <title>Record of {{patient.name}}</title>
-        <style type="text/css">
-            table, th, td {
-                border: 1px solid black;
-            }
-        </style>
-    </head>
-    <body>
-        <div>
-            <a href="">
-                {% load static %}
-                <img src="{% static '/logo.jpg' %}">
-            </a>
-            <a href="/system/patients/">Show All Patients</a>
-        </div>
-        <div>
-            <h3>Selected Patient</h3>
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Identity Document Number</th>
-                    <th>Date of Birth</th>
-                    <th>Date Case Confirmed</th>
-                    <th>Case Number</th>
-                </tr>
-                <tr>
-                    <td>{{patient.name}}</td>
-                    <td>{{patient.IDnum}}</td>
-                    <td>{{patient.DoB}}</td>
-                    <td>{{patient.DCC}}</td>
-                    <td>{{patient.caseID}}</td>
-                </tr>
-            </table>
-            <h3>Visited Locations in Past 14 Days</h3>
-            <table>
-                <tr>
-                    <th>Location Visited</th>
-                    <th>Address</th>
-                    <th>District</th>
-                    <th>X Coord</th>
-                    <th>Y Coord</th>
-                    <th>Date From</th>
-                    <th>Date To</th>
-                    <th>Detail</th>
-                    <th>Category</th>
-                </tr>
-                {% for visit in visit_list %}
-                <tr>
-                    <td>{{visit.location.name}}</td>
-                    <td>{{visit.location.address}}</td>
-                    <td>{{visit.location.district}}</td>
-                    <td>{{visit.location.x}}</td>
-                    <td>{{visit.location.y}}</td>
-                    <td>{{visit.D_from}}</td>
-                    <td>{{visit.D_to}}</td>
-                    <td>{{visit.detail}}</td>
-                    <td>{{visit.category}}</td>
-                </tr>            
-                {% endfor %}
-            </table>
-        </div>
-    </body>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+<head>
+    <meta Charset=“UTF-8”>
+    <title>Record of {{ patient.name }}</title>
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <a href="">
+        {% load static %}
+        <img src="{% static '/logo.jpg' %}" alt="Logo">
+    </a>
+    <a href="/system/patients/">Show All Patients</a>
+</div>
+<div>
+    <h3>Selected Patient</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Identity Document Number</th>
+            <th>Date of Birth</th>
+            <th>Date Case Confirmed</th>
+            <th>Case Number</th>
+        </tr>
+        <tr>
+            <td>{{ patient.name }}</td>
+            <td>{{ patient.IDnum }}</td>
+            <td>{{ patient.DoB }}</td>
+            <td>{{ patient.DCC }}</td>
+            <td>{{ patient.caseID }}</td>
+        </tr>
+    </table>
+    <h3>Visited Locations in Past 14 Days</h3>
+    <table>
+        <tr>
+            <th>Location Visited</th>
+            <th>Address</th>
+            <th>District</th>
+            <th>X Coord</th>
+            <th>Y Coord</th>
+            <th>Date From</th>
+            <th>Date To</th>
+            <th>Detail</th>
+            <th>Category</th>
+        </tr>
+        {% for visit in visit_list %}
+            <tr>
+                <td>{{ visit.location.name }}</td>
+                <td>{{ visit.location.address }}</td>
+                <td>{{ visit.location.district }}</td>
+                <td>{{ visit.location.x }}</td>
+                <td>{{ visit.location.y }}</td>
+                <td>{{ visit.D_from }}</td>
+                <td>{{ visit.D_to }}</td>
+                <td>{{ visit.detail }}</td>
+                <td>{{ visit.category }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="9" style="text-align: center">Empty for now</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
 </html>
