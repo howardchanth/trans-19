@@ -1,5 +1,8 @@
+from django.http import HttpResponseRedirect
+from django.views.generic import CreateView, UpdateView
 from django.views.generic import TemplateView
 
+from system.forms import PatientForm, LocationForm, VisitForm
 from system.models import Visit, Patient, Location
 
 
@@ -42,3 +45,38 @@ class UserViewOnePatient(TemplateView):
         context['patient'] = patient
         context['visit_list'] = patient.visit_set.all()
         return context
+
+
+class UserCreateOnePatient(CreateView):
+    template_name = 'create_patient.html'
+    form_class = PatientForm
+    success_url = "system/create_patient"
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+        return HttpResponseRedirect("system/create_patient.html")
+
+
+class UserCreateOneLocation(CreateView):
+    template_name = 'create_location.html'
+    form_class = LocationForm
+    success_url = "system/create_location"
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+        return HttpResponseRedirect("system/create_location.html")
+
+
+class UserCreateOneVisit(CreateView):
+    template_name = 'create_visit.html'
+    form_class = VisitForm
+    success_url = "system/create_visit"
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+        return HttpResponseRedirect("system/create_visit.html")
+
+
