@@ -1,60 +1,65 @@
 <!doctype html>
-<html>
-    <head>
-        <meta Charset=“UTF-8”>
-        <title>Record of {{patient.name}}</title>
-        <style type="text/css">
-            table, th, td {
-                border: 1px solid black;
-                margin-left:auto;
-                margin-right:auto;
-                height: 30px;
-                text-align:center;
-            }
-        </style>
-    </head>
-    <body>
-        <div>
-            <a href="">
-                {% load static %}
-                <img src="{% static '/logo.jpg' %}">
-            </a>
-            <a href="/system/patients/">Patients</a> |
-            <a href="/system/locations/">Locations</a> |
-            <a href="/system/visits/">Visits</a>
-            <div style="text-align:right;">
-            <a href="/system/patients/">Search</a> |
-            <a href="/system/patients/">Create</a>
-            </div>
-            <h2 style="text-align:center;"> Visits List</h2>
-        </div>
-        <div style="text-align:center;">
-            <table>
-                <tr>
-                    <th>Patient Name</th>
-                    <th>Location Visited</th>
-                    <th>Date From</th>
-                    <th>Date To</th>
-                    <th>Detail</th>
-                    <th>Category</th>
-                    <th>Actions</th>
-                </tr>
-                {% for visit in visit_list %}
-                <tr>
-                    <td>{{visit.patient.name}}</td>
-                    <td>{{visit.location.name}}</td>
-                    <td>{{visit.D_from}}</td>
-                    <td>{{visit.D_to}}</td>
-                    <td>{{visit.detail}}</td>
-                    <td>{{visit.category}}</td>
-                    <td>
-                        <a href="/system/patients/">View</a> |
-                        <a href="/system/patients/">Edit</a> |
-                        <a href="/system/patients/">Delete</a>
-                    </td>
-                </tr>            
-                {% endfor %}
-            </table>
-        </div>
-    </body>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+<head>
+    <meta Charset=“UTF-8”>
+    <title>Record of {{ patient.name }}</title>
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+            margin-left: auto;
+            margin-right: auto;
+            height: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <a href="">
+        {% load static %}
+        <img src="{% static '/logo.jpg' %}" alt="Logo">
+    </a>
+    <a href="/system/patients/">Patients</a> |
+    <a href="/system/locations/">Locations</a> |
+    <a href="/system/visits/">Visits</a>
+    <div style="text-align:right;">
+        <a href="/system/patients/">Search</a> |
+        <a href="/system/patients/">Create</a>
+    </div>
+    <h2 style="text-align:center;"> Visits List</h2>
+</div>
+<div style="text-align:center;">
+    <table>
+        <tr>
+            <th>Patient Name</th>
+            <th>Location Visited</th>
+            <th>Date From</th>
+            <th>Date To</th>
+            <th>Detail</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+        {% for visit in visit_list %}
+            <tr>
+                <td>{{ visit.patient.name }}</td>
+                <td>{{ visit.location.name }}</td>
+                <td>{{ visit.D_from }}</td>
+                <td>{{ visit.D_to }}</td>
+                <td>{{ visit.detail }}</td>
+                <td>{{ visit.category }}</td>
+                <td>
+                    <a href="/system/patients/">View</a> |
+                    <a href="/system/patients/">Edit</a> |
+                    <a href="/system/patients/">Delete</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="7" style="text-align: center">Empty for now</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
 </html>
