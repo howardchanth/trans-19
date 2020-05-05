@@ -14,15 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+
 from system import views
 
 urlpatterns = [
     path('patients/',
-        views.UserViewAllPatients.as_view(),
-        name='all-patients'),
+         views.UserViewAllPatients.as_view(),
+         name='all-patients'),
     path('visits/',
-        views.UserViewAllVisits.as_view(),
-        name='all-visits'),
+         views.UserViewAllVisits.as_view(),
+         name='all-visits'),
     path('locations/',
          views.UserViewAllLocations.as_view(),
          name='all-locations'),
@@ -39,8 +40,6 @@ urlpatterns = [
          views.UserCreateOneVisit.as_view(),
          name='create-visit'),
     path('view/<int:caseID>',
-        views.UserViewOnePatient.as_view(),
-        name='selected-patient'
-
-    ),
+         views.UserViewOnePatient.as_view(),
+         name='selected-patient'),
 ]
