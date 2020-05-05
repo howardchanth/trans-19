@@ -1,0 +1,63 @@
+<!doctype html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+<head>
+    <meta Charset=“UTF-8”>
+    <title>All Patient Records</title>
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+            margin-left: auto;
+            margin-right: auto;
+            height: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <a href="">
+        {% load static %}
+        <img src="{% static '/logo.jpg' %}" alt="Logo">
+    </a>
+    <a href="{% url 'view-patients' %}">Patients</a> |
+    <a href="{% url 'view-locations' %}">Locations</a> |
+    <a href="{% url 'view-visits' %}">Visits</a>
+    <div style="text-align:right;">
+        <a href="/system/patients/">Search</a> |
+        <a href="{% url 'create-patient' %}">Create</a>
+    </div>
+</div>
+<div>
+    <h2 style="text-align:center;"> All Patients</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Identity Document Number</th>
+            <th>Date of Birth</th>
+            <th>Date Case Confirmed</th>
+            <th>Case Number</th>
+            <th>Actions</th>
+        </tr>
+        {% for patient in patient_list %}
+            <tr>
+                <td>{{ patient.name }}</td>
+                <td>{{ patient.IDnum }}</td>
+                <td>{{ patient.DoB }}</td>
+                <td>{{ patient.DCC }}</td>
+                <td>{{ patient.caseID }}</td>
+                <td>
+                    <a href="{% url 'selected-patient' pk=patient.pk %}">View</a> |
+                    <a href="{% url 'update-patient' pk=patient.pk %}">Edit</a> |
+                    <a href="{% url 'delete-patient' pk=patient.pk %}">Delete</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center">Empty for now</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>
