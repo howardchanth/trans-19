@@ -1,7 +1,7 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 from django.views.generic import TemplateView
+
 from system.models import Visit, Patient, Location
+
 
 # Create your views here.
 class UserViewAllPatients(TemplateView):
@@ -42,4 +42,3 @@ class UserViewOnePatient(TemplateView):
         context['patient'] = patient
         context['visit_list'] = patient.visit_set.all()
         return context
-
