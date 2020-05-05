@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Visit</title>
+    <title>Update Visit {{ object }}</title>
     <style type="text/css">
         table, th, td {
             border: 1px solid black;
@@ -31,7 +31,7 @@
         <a href="{% url 'create-patient' %}">Create</a>
     </div>
 </div>
-<h2 style="text-align:center;"> Create New Visit</h2>
+<h2 style="text-align:center;"> Update Visit</h2>
 <table>
     <th style="width: 300px"><a href="/system/create_patient/">Patient</a></th>
     <th style="width: 300px"><a href="/system/create_location/">Location</a></th>
@@ -40,7 +40,7 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Submit">
+    <input type="submit" value="Update">
 </form>
 </body>
 </html>

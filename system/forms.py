@@ -46,7 +46,13 @@ class VisitForm(ModelForm):
             'patient': 'Patient',
             'location': 'Location',
             'D_from': 'Date from',
-            'D_to': 'District',
+            'D_to': 'Date to',
             'detail': 'Visit details',
             'category': 'Category',
+        }
+        cur_year = datetime.datetime.today().year
+        year_range = tuple([i for i in range(cur_year - 100, cur_year + 1)])
+        widgets = {
+            'D_from': forms.SelectDateWidget(years=year_range),
+            'D_to': forms.SelectDateWidget(years=year_range),
         }
