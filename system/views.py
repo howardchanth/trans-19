@@ -1,10 +1,9 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.views.generic import TemplateView, FormView, CreateView
+from django.http import HttpResponseRedirect
+from django.views.generic import CreateView, UpdateView
 from django.views.generic import TemplateView
 
+from system.forms import PatientForm, LocationForm, VisitForm
 from system.models import Visit, Patient, Location
-from system.forms import PatientForm
 
 
 # Create your views here.
@@ -47,20 +46,41 @@ class UserViewOnePatient(TemplateView):
         context['visit_list'] = patient.visit_set.all()
         return context
 
-# TODO: Still finding a way to connect this to data
-# class UserCreateOnePatient(FormView):
-#     template_name = 'create_patient.html'
-#     form_class = PatientForm
-#
-#     def form_valid(self, form):
-#         # This method is called when valid form data has been POSTed.
-#         # It should return an HttpResponse.
-#         form.send_email()
-#         return super().form_valid(form)
 
-
-# TODO: Need to customize field labels by changing the verbose_name of the model field
 class UserCreateOnePatient(CreateView):
+    template_name = 'create_patient.html'
+    form_class = PatientForm
+    success_url = "system/create_patient"
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+        return HttpResponseRedirect("system/create_patient.html")
+
+
+class UserCreateOneLocation(CreateView):
+    template_name = 'create_location.html'
+    form_class = LocationForm
+    success_url = "system/create_location"
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+        return HttpResponseRedirect("system/create_location.html")
+
+
+class UserCreateOneVisit(CreateView):
+    template_name = 'create_visit.html'
+    form_class = VisitForm
+    success_url = "system/create_visit"
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+        return HttpResponseRedirect("system/create_visit.html")
+
+
+class UserUpdateOnePatient(UpdateView):
     model = Patient
     fields = '__all__'
     template_name = 'create_patient.html'

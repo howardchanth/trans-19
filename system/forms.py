@@ -1,32 +1,52 @@
+import datetime
+
 from django import forms
-from system.models import Patient, Location
+from django.forms import ModelForm
+
+from system.models import Patient, Location, Visit
 
 
-class PatientForm(forms.Form):
-    caseID = forms.IntegerField()
-    name = forms.CharField()
-    IDnum = forms.CharField()
-    DoB = forms.DateField()
-    DCC = forms.DateField()
+class PatientForm(ModelForm):
+    class Meta:
+        model = Patient
+        fields = '__all__'
+        labels = {
+            'caseID': 'Case ID',
+            'name': 'Patient Name',
+            'IDnum': 'ID No.',
+            'DoB': 'Date of Birth',
+            'DCC': 'Date confirmed',
+        }
+        cur_year = datetime.datetime.today().year
+        year_range = tuple([i for i in range(cur_year - 100, cur_year + 1)])
+        widgets = {
+            'DoB': forms.SelectDateWidget(years=year_range),
+            'DCC': forms.SelectDateWidget(years=year_range),
+        }
 
 
+class LocationForm(ModelForm):
+    class Meta:
+        model = Location
+        fields = '__all__'
+        labels = {
+            'address': 'Address',
+            'name': 'Location Name',
+            'district': 'District',
+            'x': 'X coordinate',
+            'y': 'Y coordinate',
+        }
 
-class LocationForm(forms.Form):
 
-    name = forms.CharField()
-    address = forms.CharField()
-    district = forms.CharField()
-    x = forms.IntegerField()
-    y = forms.IntegerField()
-
-
-
-class Visit(forms.Form):
-    patient = forms.ModelChoiceField(queryset=Patient.objects.all())
-    location = forms.ModelChoiceField(queryset=Location.objects.all())
-
-    D_from = forms.DateField()
-    D_to = forms.DateField()
-
-    detail = forms.CharField()
-    category = forms.CharField()
+class VisitForm(ModelForm):
+    class Meta:
+        model = Visit
+        fields = '__all__'
+        labels = {
+            'patient': 'Patient',
+            'location': 'Location',
+            'D_from': 'Date from',
+            'D_to': 'District',
+            'detail': 'Visit details',
+            'category': 'Category',
+        }
