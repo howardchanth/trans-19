@@ -80,19 +80,3 @@ class UserCreateOneVisit(CreateView):
         return HttpResponseRedirect("system/create_visit.html")
 
 
-class UserUpdateOnePatient(UpdateView):
-    model = Patient
-    fields = '__all__'
-    template_name = 'create_patient.html'
-
-
-class UserCreateOneLocation(CreateView):
-    model = Location
-    fields = '__all__'
-    template_name = 'create_location.html'
-
-
-class UserCreateOneVisit(CreateView):
-    model = Visit
-    fields = '__all__'
-    template_name = 'create_visit.html'
