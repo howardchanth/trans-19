@@ -11,12 +11,20 @@
         {% load static %}
         <img src="{% static '/logo.jpg' %}" alt="Logo">
     </a>
+    <a href="{% url 'view-patients' %}">Patients</a> |
+    <a href="{% url 'view-locations' %}">Locations</a> |
+    <a href="{% url 'view-visits' %}">Visits</a>
+    <div style="text-align:right;">
+        <a href="/system/patients/">Search</a> |
+        <a href="{% url 'create-patient' %}">Create</a>
+    </div>
 </div>
 <div>
+    <h2 style="text-align:center;"> All Patients</h2>
     <form method="post">
         {% csrf_token %}
-        <h4 style="text-align:center;">Are you sure you want to delete record for location "{{ location.name }}"?</h4>
-        <p style="text-align:center;"><input type="submit" value="Delete" /><a href="{% url 'view-locations' %}">No</a></P>
+        <p>Are you sure you want to delete record for location "{{ location.name }}"?</p>
+        <input type="submit" value="Delete" />
     </form>
 </div>
 </body>
