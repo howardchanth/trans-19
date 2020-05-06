@@ -23,8 +23,9 @@
     <h2 style="text-align:center;"> All Patients</h2>
     <form method="post">
         {% csrf_token %}
-        <p>Are you sure you want to delete record for visit "{{ object }}"?</p>
-        <input type="submit" value="Delete" />
+        <p style="text-align:center;">Are you sure you want to delete record for visit "{{ object }}"?</p>
+        <p style="text-align:center;"><input type="submit" value="Delete" /><a href="{% url 'view-visits' %}">No</a></p>
+    </form>
     </form>
 </div>
 </body>
