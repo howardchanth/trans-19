@@ -1,7 +1,8 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic import TemplateView
-from django.contrib import messages
+from django.db.models import Q
+from datetime import timedelta
 
 from system.forms import PatientForm, LocationForm, VisitForm
 from system.models import Visit, Patient, Location
@@ -118,3 +119,40 @@ class UserDeleteOneVisit(DeleteView):
     template_name = 'delete_visit.html'
     model = Visit
     success_url = "/system/view_visits"
+
+
+class ConnectionIdentify(TemplateView):
+    template_name = 'identify_connection.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        patient_pk = self.kwargs['pk']
+        window_days = self.request.GET.get('days', None)
+        if window_days is None:
+            window_days = 0
+        else:
+            window_days = int(window_days)
+        p = Patient.objects.get(pk=patient_pk)
+        context['patient'] = p
+        context['visit_list'] = p.visit_set.exclude(
+            patient__visit__category__in=["Residential", "Workplace"])
+        context['connections'] = [
+            Visit.objects.filter(
+                location=visit.location
+            ).filter(
+                Q(D_from__lte=visit.D_to + timedelta(days=+window_days)) |
+                Q(D_to__gte=visit.D_from + timedelta(days=-window_days)),
+            ).exclude(
+                patient=context['patient']
+            ).exclude(
+                category__in=["Residential", "Workplace"]
+            ) for
+            visit in
+            context['visit_list']
+        ]
+        context['visit_connections_list'] = zip(
+            context['visit_list'],
+            context['connections'],
+        )
+        context['window_days'] = window_days
+        return context
