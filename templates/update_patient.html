@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Patients {{ patient.name }}</title>
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40px;
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <a href="">
+        {% load static %}
+        <img src="{% static '/logo.jpg' %}" alt="Logo">
+    </a>
+    <a href="{% url 'view-patients' %}">Patients</a> |
+    <a href="{% url 'view-locations' %}">Locations</a> |
+    <a href="{% url 'view-visits' %}">Visits</a>
+    <div style="text-align:right;">
+        <a href="/system/patients/">Search</a> |
+        <a href="{% url 'create-patient' %}">Create</a>
+    </div>
+</div>
+<h2 style="text-align:center;"> Update Patient</h2>
+<table>
+    <th style="width: 300px"><a href="/system/create_patient/">Patient</a></th>
+    <th style="width: 300px"><a href="/system/create_location/">Location</a></th>
+    <th style="width: 300px"><a href="/system/create_visit/">Visit</a></th>
+</table>
+<form method="post" style>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+</form>
+</body>
+</html>

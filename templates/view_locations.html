@@ -1,0 +1,60 @@
+<!doctype html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+<head>
+    <meta Charset=“UTF-8”>
+    <title>All locations</title>
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+            margin-left: auto;
+            margin-right: auto;
+            height: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <a href="">
+        {% load static %}
+        <img src="{% static '/logo.jpg' %}" alt="Logo">
+    </a>
+    <a href="{% url 'view-patients' %}">Patients</a> |
+    <a href="{% url 'view-locations' %}">Locations</a> |
+    <a href="{% url 'view-visits' %}">Visits</a>
+    <div style="text-align:right;">
+        <a href="/system/patients/">Search</a> |
+        <a href="{% url 'create-patient' %}">Create</a>
+    </div>
+</div>
+<div style="text-align:center;">
+    <h2 style="text-align:center;"> Locations Details</h2>
+    <table>
+        <tr>
+            <th>Location</th>
+            <th>Address</th>
+            <th>District</th>
+            <th>Coordinates</th>
+            <th>Actions</th>
+        </tr>
+        {% for location in location_list %}
+            <tr>
+                <td>{{ location.name }}</td>
+                <td>{{ location.address }}</td>
+                <td>{{ location.district }}</td>
+                <td>{{ location.x }}, {{ location.y }}</td>
+                <td>
+                    <a href="{% url 'update-location' pk=location.pk %}">Edit</a> |
+                    <a href="{% url 'delete-location' pk=location.pk %}">Delete</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center">Empty for now</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>
