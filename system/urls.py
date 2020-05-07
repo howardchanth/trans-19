@@ -61,4 +61,7 @@ urlpatterns = [
     path('delete_visit/<int:pk>',
          views.UserDeleteOneVisit.as_view(),
          name='delete-visit'),
+    path('identify_connection/<int:pk>',
+         views.ConnectionIdentify.as_view(),
+         name='identify-connection'),
 ]

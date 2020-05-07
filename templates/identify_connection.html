@@ -1,0 +1,80 @@
+<!doctype html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+<head>
+    <meta Charset=“UTF-8”>
+    <title>Record of {{ patient.name }}</title>
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <a href="">
+        {% load static %}
+        <img src="{% static '/logo.jpg' %}" alt="Logo">
+    </a>
+    <a href="{% url 'view-patients' %}">Patients</a> |
+    <a href="{% url 'view-locations' %}">Locations</a> |
+    <a href="{% url 'view-visits' %}">Visits</a>
+    <div style="text-align:right;">
+        <a href="/system/patients/">Search</a> |
+        <a href="{% url 'create-patient' %}">Create</a>
+    </div>
+</div>
+<div>
+    <h3>Selected Patient</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Date Case Confirmed</th>
+            <th>Case Number</th>
+        </tr>
+        <tr>
+            <td>{{ patient.name }}</td>
+            <td>{{ patient.DCC }}</td>
+            <td>{{ patient.caseID }}</td>
+        </tr>
+    </table>
+    <h3>Search Parameters</h3>
+    <form action="" method="get">
+        <label for="days">Number of window days: </label>
+        <input id="days" value="{{ window_days }}" name="days">
+        <input type="submit">
+    </form>
+    <h3>Connections</h3>
+    <table>
+        <tr>
+            <th>Case Number</th>
+            <th>Name</th>
+            <th>Date Case Confirmed</th>
+            <th>Common Location Visited</th>
+            <th>Date Visited by this Patient</th>
+            <th>Detail</th>
+            <th>Date Visited by Selected Patient</th>
+            <th>Detail</th>
+        </tr>
+        {% for visit in visit_connections_list %}
+            {% for connection in visit.1 %}
+                <tr>
+                    <td>{{ connection.patient.caseID }}</td>
+                    <td>{{ connection.patient.name }}</td>
+                    <td>{{ connection.patient.DCC }}</td>
+                    <td>{{ connection.location.name }}</td>
+                    <td>{{ connection.D_from }} - {{ connection.D_to }}</td>
+                    <td>{{ connection.detail }}</td>
+                    <td>{{ visit.0.D_from }} - {{ visit.0.D_to }}</td>
+                    <td>{{ visit.0.detail }}</td>
+                </tr>
+            {% endfor %}
+        {% empty %}
+            <tr>
+                <td colspan="9" style="text-align: center">Empty for now</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>
