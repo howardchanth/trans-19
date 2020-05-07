@@ -2,6 +2,29 @@
 <html lang="en">
 <head>
     <meta Charset=“UTF-8”>
+    {% load static %}
+    {% if debug %}
+        <link rel="stylesheet" type="text/css"
+              href="{% static '/bootstrap/css/bootstrap.css' %}">
+        <link rel="stylesheet" type="text/css"
+              href="{% static '/bootstrap/css/bootstrap-grid.css' %}">
+        <link rel="stylesheet" type="text/css"
+              href="{% static '/bootstrap/css/bootstrap-reboot.css' %}">
+        <script src="{% static '/jquery-3.5.1.slim.js' %}"></script>
+        <script src="{% static '/bootstrap/js/bootstrap.bundle.js' %}"></script>
+        <script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
+    {% else %}
+        <link rel="stylesheet" type="text/css"
+              href="{% static '/bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css"
+              href="{% static '/bootstrap/css/bootstrap-grid.min.css' %}">
+        <link rel="stylesheet" type="text/css"
+              href="{% static '/bootstrap/css/bootstrap-reboot.min.css' %}">
+        <script src="{% static '/jquery-3.5.1.slim.min.js' %}"></script>
+        <script src="{% static '/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+    {% endif %}
+    <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}">
     <title>
         {% block title %}
             Base HTML
@@ -19,22 +42,41 @@
 </head>
 <body>
 <div>
-    <div>
-        <a href="{% url 'view-patients' %}">
-            {% load static %}
-            <img src="{% static '/logo.jpg' %}" alt="Logo">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="{% url 'view-patients' %}">
+            <img src="{% static '/logo.jpg' %}" alt="Logo" width="200px">
         </a>
-        <a href="{% url 'view-patients' %}">Patients</a> |
-        <a href="{% url 'view-locations' %}">Locations</a> |
-        <a href="{% url 'view-visits' %}">Visits</a>
-    </div>
-    <div style="text-align:right;">
-        <a href="{% url 'search-connections' %}">Search</a> |
-        <a href="{% url 'create-patient' %}">Create</a>
-    </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav mr-auto">
+                {% with request.resolver_match.view_name as view_name %}
+                    <a class="nav-item nav-link{% if view_name == 'view-patients' %} active{% endif %}"
+                       href="{% url 'view-patients' %}">Patients</a>
+                    <a class="nav-item nav-link{% if view_name == 'view-locations' %} active{% endif %}"
+                       href="{% url 'view-locations' %}">Locations</a>
+                    <a class="nav-item nav-link{% if view_name == 'view-visits' %} active{% endif %}"
+                       href="{% url 'view-visits' %}">Visits</a>
+                {% endwith %}
+            </div>
+            <div class="navbar-nav">
+                {% with request.resolver_match.view_name as view_name %}
+                    <a class="nav-item nav-link{% if view_name == 'search-connections' %} active{% endif %}"
+                       href="{% url 'search-connections' %}">Search</a>
+                    <a class="nav-item nav-link{% if view_name == 'create-visit' or  view_name == 'create-location' or view_name == 'create-patient' %} active{% endif %}"
+                       href="{% url 'create-patient' %}">Create</a>
+                {% endwith %}
+            </div>
+        </div>
+    </nav>
 </div>
-{% block content %}
-    {# Content here #}
-{% endblock content %}
+<div class="container">
+    {% block content %}
+        {# Content here #}
+    {% endblock content %}
+</div>
 </body>
 </html>

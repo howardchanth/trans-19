@@ -1,0 +1,15 @@
+{#<table>#}
+{#    <th style="width: 300px"><a href="/system/create_patient/">Patient</a></th>#}
+{#    <th style="width: 300px"><a href="/system/create_location/">Location</a></th>#}
+{#    <th style="width: 300px"><a href="/system/create_visit/">Visit</a></th>#}
+{#</table>#}
+<nav class="nav nav-fill nav-pills">
+    {% with request.resolver_match.view_name as view_name %}
+        <a class="nav-link nav-item{% if view_name == 'create-patient' %} active{% endif %}"
+           href="/system/create_patient/">Patient</a>
+        <a class="nav-link nav-item{% if view_name == 'create-location' %} active{% endif %}"
+           href="/system/create_location/">Location</a>
+        <a class="nav-link nav-item{% if view_name == 'create-visit' %} active{% endif %}"
+           href="/system/create_visit/">Visit</a>
+    {% endwith %}
+</nav>

@@ -1,18 +1,15 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 {% block title %}
     Create Locations
 {% endblock title %}
 {% block content %}
     <div style="text-align:center;">
         <h2> Create New Location</h2>
-        <table>
-            <th style="width: 300px"><a href="/system/create_patient/">Patient</a></th>
-            <th style="width: 300px"><a href="/system/create_location/">Location</a></th>
-            <th style="width: 300px"><a href="/system/create_visit/">Visit</a></th>
-        </table>
+        {% include 'create_header.html' %}
         <form action="" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ form|crispy }}
             <input type="submit" value="Submit">
         </form>
     </div>
