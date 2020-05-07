@@ -1,23 +1,16 @@
-<!doctype html>
-<!--suppress HtmlUnknownTarget -->
-<html lang="en">
-<head>
-    <meta Charset=“UTF-8”>
-    <title>Delete Visit {{ object }}</title>
-</head>
-<body>
-<div>
-    <a href="">
-        {% load static %}
-        <img src="{% static '/logo.jpg' %}" alt="Logo">
-    </a>
-</div>
-<div>
-    <form method="post">
-        {% csrf_token %}
-        <h4 style="text-align:center;">Are you sure you want to delete record for visit "{{ object }}"?</h4>
-        <p style="text-align:center;"><input type="submit" value="Delete" /><a href="{%url 'view-visits'%}">No</a>
-    </form>
-</div>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}
+    Delete Visit {{ object }}
+{% endblock title %}
+{% block content %}
+    <div style="text-align:center;">
+        <form method="post">
+            {% csrf_token %}
+            <h4>Are you sure you want to delete record for visit "{{ object }}"?</h4>
+            <input type="submit" value="Delete" />
+            <a href="{% url 'view-visits' %}">
+                <button>No</button>
+            </a>
+        </form>
+    </div>
+{% endblock content %}
