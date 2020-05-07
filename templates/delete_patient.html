@@ -1,25 +1,16 @@
-<!doctype html>
-<!--suppress HtmlUnknownTarget -->
-<html lang="en">
-<head>
-    <meta Charset=“UTF-8”>
-    <title>Delete Patient {{ patient.name }}</title>
-</head>
-<body>
-<div>
-    <a href="">
-        {% load static %}
-        <img src="{% static '/logo.jpg' %}" alt="Logo">
-    </a>
-    <div style="text-align:right;">
+{% extends 'base.html' %}
+{% block title %}
+    Delete Patient {{ patient.name }}
+{% endblock title %}
+{% block content %}
+    <div style="text-align:center;">
+        <form method="post">
+            {% csrf_token %}
+            <h4>Are you sure you want to delete record for patient "{{ patient.name }}"?</h4>
+            <input type="submit" value="Delete" />
+            <a href="{% url 'view-patients' %}">
+                <button>No</button>
+            </a>
+        </form>
     </div>
-</div>
-<div>
-    <form method="post">
-        {% csrf_token %}
-        <h4 style="text-align:center;">Are you sure you want to delete record for patient "{{ patient.name }}"?</h4>
-        <p style="text-align:center;"><input type="submit" value="Delete" /> <a href="{% url 'view-patients' %}"><button>No</button></a> </p>
-    </form>
-</div>
-</body>
-</html>
+{% endblock content %}
