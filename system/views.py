@@ -1,10 +1,11 @@
 from django.http import HttpResponseRedirect
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, FormView
 from django.views.generic import TemplateView
 from django.db.models import Q
+from django.shortcuts import render
 from datetime import timedelta
 
-from system.forms import PatientForm, LocationForm, VisitForm
+from system.forms import PatientForm, LocationForm, VisitForm, SearchForm
 from system.models import Visit, Patient, Location
 
 
@@ -121,6 +122,40 @@ class UserDeleteOneVisit(DeleteView):
     success_url = "/system/view_visits"
 
 
+class UserSearchConnections(TemplateView):
+    template_name = 'search_connections.html'
+
+    def get(self, request):
+        form = SearchForm
+        return render(request, self.template_name, {'form':form})
+
+    def post(self, request):
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            patient = form.cleaned_data['patient']
+            window = form.cleaned_data['window']
+            form = SearchForm()
+
+        visit_list = patient.visit_set.all()
+        connection_list = [
+            Visit.objects.filter(
+                location=visit.location
+            ).filter(
+                Q(D_from__lte=visit.D_to + timedelta(days=+window)) |
+                Q(D_to__gte=visit.D_from + timedelta(days=-window)),
+            ).exclude(
+                patient=patient
+            ) for visit in visit_list
+        ]
+        visit_connection_list = zip(
+            visit_list,
+            connection_list,
+        )
+
+        args = {'form':form, 'patient':patient, 'visit_connection_list':visit_connection_list}
+        return render(request, self.template_name, args)
+
+'''
 class ConnectionIdentify(TemplateView):
     template_name = 'identify_connection.html'
 
@@ -156,3 +191,4 @@ class ConnectionIdentify(TemplateView):
         )
         context['window_days'] = window_days
         return context
+'''

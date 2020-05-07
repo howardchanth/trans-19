@@ -56,3 +56,8 @@ class VisitForm(ModelForm):
             'D_from': forms.SelectDateWidget(years=year_range),
             'D_to': forms.SelectDateWidget(years=year_range),
         }
+
+
+class SearchForm(forms.Form):
+    patient = forms.ModelChoiceField(queryset=Patient.objects.all())
+    window = forms.IntegerField(min_value=1)
