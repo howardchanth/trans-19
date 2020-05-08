@@ -1,7 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.views.generic import CreateView, UpdateView, DeleteView, FormView
 from django.views.generic import TemplateView
-from django.db.models import Q
 from django.shortcuts import render
 from datetime import timedelta
 
@@ -140,9 +139,10 @@ class UserSearchConnections(TemplateView):
         connection_list = [
             Visit.objects.filter(
                 location=visit.location
-            ).filter(
-                Q(D_from__lte=visit.D_to + timedelta(days=+window)) |
-                Q(D_to__gte=visit.D_from + timedelta(days=-window)),
+            ).exclude(
+                D_from__gt=visit.D_to + timedelta(days=+window)
+            ).exclude(
+                D_to__lt=visit.D_from + timedelta(days=-window)
             ).exclude(
                 patient=patient
             ) for visit in visit_list
