@@ -12,6 +12,7 @@
                 <th>Date of Birth</th>
                 <th>Date Case Confirmed</th>
                 <th>Case Number</th>
+                <th>Actions</th>
             </tr>
             <tr>
                 <td>{{ patient.name }}</td>
@@ -19,6 +20,10 @@
                 <td>{{ patient.DoB }}</td>
                 <td>{{ patient.DCC }}</td>
                 <td>{{ patient.caseID }}</td>
+                <td>
+                    <a href="{% url 'update-patient' pk=patient.pk %}">Edit</a> |
+                    <a href="{% url 'delete-patient' pk=patient.pk %}">Delete</a>
+                </td>
             </tr>
         </table>
         <h3>Visited Locations in Past 14 Days</h3>
@@ -33,6 +38,7 @@
                 <th>Date To</th>
                 <th>Detail</th>
                 <th>Category</th>
+                <th>Action</th>
             </tr>
             {% for visit in visit_list %}
                 <tr>
@@ -45,6 +51,10 @@
                     <td>{{ visit.D_to }}</td>
                     <td>{{ visit.detail }}</td>
                     <td>{{ visit.category }}</td>
+                    <td>
+                        <a href="{% url 'update-visit' pk=visit.pk %}">Edit</a> |
+                        <a href="{% url 'delete-visit' pk=visit.pk %}">Delete</a>
+                    </td>
                 </tr>
             {% empty %}
                 <tr>
