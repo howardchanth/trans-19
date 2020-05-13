@@ -1,8 +1,9 @@
-from django.http import HttpResponseRedirect
-from django.views.generic import CreateView, UpdateView, DeleteView, FormView
-from django.views.generic import TemplateView
-from django.shortcuts import render
 from datetime import timedelta
+
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView
 
 from system.forms import PatientForm, LocationForm, VisitForm, SearchForm
 from system.models import Visit, Patient, Location
@@ -135,7 +136,9 @@ class UserSearchConnections(TemplateView):
             window = form.cleaned_data['window']
             form = SearchForm()
 
-        visit_list = patient.visit_set.all()
+        visit_list = patient.visit_set.exclude(
+            patient__visit__category__in=["Residential", "Workplace"])
+
         connection_list = [
             Visit.objects.filter(
                 location=visit.location
@@ -145,6 +148,8 @@ class UserSearchConnections(TemplateView):
                 D_to__lt=visit.D_from + timedelta(days=-window)
             ).exclude(
                 patient=patient
+            ).exclude(
+                category__in=["Residential", "Workplace"]
             ) for visit in visit_list
         ]
         visit_connection_list = zip(
