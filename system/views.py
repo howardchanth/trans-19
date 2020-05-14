@@ -171,16 +171,11 @@ class UserLogin(LoginView):
         password = request.POST['password']
         user = authenticate(username=username, password=password)
 
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-
-                return HttpResponseRedirect('/system/view_patients')
-            else:
-                return HttpResponseRedirect('/')
-        else:
+        if user is None or not user.is_active:
             return HttpResponseRedirect('/')
 
+        login(request, user)
+        return HttpResponseRedirect('/system/view_patients')
 
 '''
 class ConnectionIdentify(TemplateView):
