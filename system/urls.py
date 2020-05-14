@@ -18,6 +18,9 @@ from django.urls import path
 from system import views
 
 urlpatterns = [
+    path('',
+         views.UserLogin.as_view(),
+         name='login'),
     # view records
     path('view_patients/',
          views.UserViewAllPatients.as_view(),
@@ -65,7 +68,4 @@ urlpatterns = [
     path('search_connections/',
          views.UserSearchConnections.as_view(),
          name='search-connections'),
-    #path('identify_connection/<int:pk>',
-    #     views.ConnectionIdentify.as_view(),
-    #     name='identify-connection'),
 ]

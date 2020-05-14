@@ -1,6 +1,8 @@
 from datetime import timedelta
 
-from django.http import HttpResponseRedirect
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.views import LoginView
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic import TemplateView
@@ -157,8 +159,28 @@ class UserSearchConnections(TemplateView):
             connection_list,
         )
 
-        args = {'form':form, 'patient':patient, 'visit_connection_list':visit_connection_list}
+        args = {'form': form, 'patient': patient, 'visit_connection_list': visit_connection_list}
         return render(request, self.template_name, args)
+
+
+class UserLogin(LoginView):
+    template_name = 'login.html'
+
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+
+                return HttpResponseRedirect('/system/view_patients')
+            else:
+                return HttpResponse("Inactive user.")
+        else:
+            return HttpResponseRedirect('/')
+
 
 '''
 class ConnectionIdentify(TemplateView):
