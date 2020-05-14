@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic import TemplateView
@@ -177,7 +177,7 @@ class UserLogin(LoginView):
 
                 return HttpResponseRedirect('/system/view_patients')
             else:
-                return HttpResponse("Inactive user.")
+                return HttpResponseRedirect('/')
         else:
             return HttpResponseRedirect('/')
 
