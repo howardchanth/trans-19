@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+    All Visit Records
+{% endblock title %}
+{% block content %}
+    <div style="text-align:center;">
+        <h2>Visits List</h2>
+        <table>
+            <tr>
+                <th>Patient Name</th>
+                <th>Location Visited</th>
+                <th>Date From</th>
+                <th>Date To</th>
+                <th>Detail</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+            {% for visit in visit_list %}
+                <tr>
+                    <td>{{ visit.patient.name }}</td>
+                    <td>{{ visit.location.name }}</td>
+                    <td>{{ visit.D_from }}</td>
+                    <td>{{ visit.D_to }}</td>
+                    <td>{{ visit.detail }}</td>
+                    <td>{{ visit.category }}</td>
+                    <td>
+                        <a href="{% url 'update-visit' pk=visit.pk %}">Edit</a> |
+                        <a href="{% url 'delete-visit' pk=visit.pk %}">Delete</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7" style="text-align: center">Empty for now</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}
+    Update Visit {{ object }}
+{% endblock title %}
+{% block content %}
+    <div style="text-align:center;">
+        <h2>Update Visit</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Update">
+        </form>
+    </div>
+{% endblock content %}

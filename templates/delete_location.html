@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+    Delete Location {{ location.name }}
+{% endblock title %}
+{% block content %}
+    <div style="text-align:center;">
+        <form method="post">
+            {% csrf_token %}
+            <h4>Are you sure you want to delete record for location "{{ location.name }}"?</h4>
+            <input type="submit" value="Delete" />
+            <a href="{% url 'view-locations' %}">
+                <button>No</button>
+            </a>
+        </form>
+    </div>
+{% endblock content %}

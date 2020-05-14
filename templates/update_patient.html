@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}
+    Update Patients {{ patient.name }}
+{% endblock title %}
+{% block content %}
+    <div style="text-align:center;">
+        <h2>Update Patient</h2>
+        <form method="post" style>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Update">
+        </form>
+    </div>
+{% endblock content %}

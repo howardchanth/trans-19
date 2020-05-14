@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}
+    Create Patients
+{% endblock title %}
+{% block content %}
+    <div style="text-align:center;">
+        <h2> Create New Patient</h2>
+        {% include 'create_header.html' %}
+        <form method="post" style>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Add">
+        </form>
+    </div>
+{% endblock content %}

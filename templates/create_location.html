@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}
+    Create Locations
+{% endblock title %}
+{% block content %}
+    <div style="text-align:center;">
+        <h2> Create New Location</h2>
+        {% include 'create_header.html' %}
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+{% endblock content %}

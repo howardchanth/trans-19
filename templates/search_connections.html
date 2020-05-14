@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}
+    Search for Connections
+{% endblock title %}
+{% block content %}
+    <div style="text-align:center;">
+        <h2>Search for Connections</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Select">
+        </form>
+    </div>
+    {% if patient is not None %}
+        <table>
+            <tr>
+                <th>Case No.</th>
+                <th>Name</th>
+                <th>HKID</th>
+                <th>Date of Birth</th>
+                <th>Date Case Confirmed</th>
+                <th>Actions</th>
+            </tr>
+            <tr>
+                <td>{{ patient.caseID }}</td>
+                <td>{{ patient.name }}</td>
+                <td>{{ patient.IDnum }}</td>
+                <td>{{ patient.DoB }}</td>
+                <td>{{ patient.DCC }}</td>
+                <td>
+                    <a href="{% url 'update-patient' pk=patient.pk %}">Edit</a> |
+                    <a href="{% url 'delete-patient' pk=patient.pk %}">Delete</a>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>Case Number</th>
+                <th>Name</th>
+                <th>Date Case Confirmed</th>
+                <th>Common Location Visited</th>
+                <th>Date Visited by This Patient</th>
+                <th>Detail</th>
+                <th>Date Visited by Selected Patient</th>
+                <th>Detail</th>
+                <th>Actions</th>
+            </tr>
+            {% for visit in visit_connection_list %}
+                {% for connection in visit.1 %}
+                    <tr>
+                        <td>{{ connection.patient.caseID }}</td>
+                        <td>{{ connection.patient.name }}</td>
+                        <td>{{ connection.patient.DCC }}</td>
+                        <td>{{ connection.location.name }}</td>
+                        <td>{{ connection.D_from }} - {{ connection.D_to }}</td>
+                        <td>{{ connection.detail }}</td>
+                        <td>{{ visit.0.D_from }} - {{ visit.0.D_to }}</td>
+                        <td>{{ visit.0.detail }}</td>
+                        <td>
+                            <a href="{% url 'update-visit' pk=connection.pk %}">Edit</a> |
+                            <a href="{% url 'delete-visit' pk=connection.pk %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% empty %}
+                <tr>
+                    <td colspan="9" style="text-align: center">Empty for now</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock content %}

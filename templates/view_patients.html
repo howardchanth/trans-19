@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}
+    All Patient Records
+{% endblock title %}
+{% block content %}
+    <div style="text-align:center;">
+        <h2>All Patients</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Identity Document Number</th>
+                <th>Date of Birth</th>
+                <th>Date Case Confirmed</th>
+                <th>Case Number</th>
+                <th>Actions</th>
+            </tr>
+            {% for patient in patient_list %}
+                <tr>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.IDnum }}</td>
+                    <td>{{ patient.DoB }}</td>
+                    <td>{{ patient.DCC }}</td>
+                    <td>{{ patient.caseID }}</td>
+                    <td>
+                        <a href="{% url 'selected-patient' pk=patient.pk %}">View</a> |
+                        <a href="{% url 'update-patient' pk=patient.pk %}">Edit</a> |
+                        <a href="{% url 'delete-patient' pk=patient.pk %}">Delete</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center">Empty for now</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock content %}
